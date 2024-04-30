@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	version="4.0">
+
+	<servlet>
+		<servlet-name>GetStudents</servlet-name>
+		<servlet-class>dev.elias.jsonapi.demo.GetStudents</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetStudents</servlet-name>
+		<url-pattern>/getStudents</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GetDatabase</servlet-name>
+		<servlet-class>dev.elias.jsonapi.demo.GetDatabase</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetDatabase</servlet-name>
+		<url-pattern>/getDatabase</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PostOneStudent</servlet-name>
+		<servlet-class>dev.elias.jsonapi.demo.PostOneStudent</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PostOneStudent</servlet-name>
+		<url-pattern>/postOneStudent</url-pattern>
+	</servlet-mapping>
+</web-app>
