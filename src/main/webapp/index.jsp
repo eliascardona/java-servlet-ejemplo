@@ -10,21 +10,25 @@
 	<main>
 		<h2>Welcome to Simple REST API</h2>
 
-		<form id="studentForm">
-			<label for="name">Name:</label>
-			<input type="text" id="name" name="name">
-			<br>
+		<div style="margin:2rem;padding:2rem;border-radius:1em;box-shadow: rgba(100, 100, 100, 0.3) 0px 1px 4px 0px;">
+    
+			<form id="studentForm">
+				<label for="uname">Name:</label>
+				<input type="text" id="uname" name="uname">
+				<br>
 
-			<label for="grade">Grade:</label>
-			<input type="number" id="grade" name="grade">
-			<br>
+				<label for="grade">Grade:</label>
+				<input type="number" id="grade" name="grade">
+				<br>
 
-			<label for="gradeId">Grade ID:</label>
-			<input type="text" id="gradeId" name="gradeId">
-			<br>
+				<label for="gradeId">Grade ID:</label>
+				<input type="text" id="gradeId" name="gradeId">
+				<br>
+				<button type="submit">Submit</button>
+			</form>
 
-			<button type="submit">Submit</button>
-		</form>
+		</div>
+
 
 		<script defer>
 			const studentForm = document.getElementById("studentForm")
@@ -38,9 +42,9 @@
 
 			async function handleSubmit(evt) {
 				let formData = {
-					name: e.target.name.value,
-					grade: parseInt(e.target.grade.value),
-					gradeId: e.target.gradeId.value
+					uname: evt.target.uname.value,
+					grade: parseInt(evt.target.grade.value),
+					gradeId: evt.target.gradeId.value
 				}
 				let fetchOptions = {
 					...baseOptions,
@@ -51,8 +55,6 @@
 					const r = await fetch("/EliasJSONOne/postOneStudent", fetchOptions)
 					const j = await r.json()
 					console.log(j)
-
-			//		const load = j.load
 
 				} catch(fetchError) {
 					console.error("Error fetching the API: ", fetchError)

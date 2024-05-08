@@ -30,12 +30,19 @@ public class PostOneStudent extends HttpServlet {
         String reqBody = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 
         int responseCode = HttpServletResponse.SC_OK;
+
+        // perform the action of add data to database, then format a response to the client
         boolean res = this.studentService.createStudent(reqBody);
+        String responsePayload;
+        //responsePayload = this.studentService.oneStudentToJson(reqBody);
 
         if(!res) {
             responseCode = HttpServletResponse.SC_BAD_REQUEST;
+            responsePayload = "bad request";
         }
-        this.outputResponse(resp, null, responseCode);
+        responsePayload = reqBody;
+        this.outputResponse(resp, responsePayload, responseCode);
+
     }
 
     /////////////////////////////////////////////////////////////////////

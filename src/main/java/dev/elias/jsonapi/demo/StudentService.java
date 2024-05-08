@@ -5,14 +5,16 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
-
 import com.google.gson.Gson;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonDeserializationContext;
+
 import dev.elias.jsonapi.demo.entity.Student;
+//import dev.elias.jsonapi.demo.services.StudentJsonDeserializer;
 
 
 public class StudentService {
-    private AtomicInteger key;
+    private Integer key;
     private ConcurrentMap<Integer, Student> students;
 
     public StudentService() {
@@ -33,12 +35,6 @@ public class StudentService {
         return this.toJson(list);
     }
 
-    /**
-     * Create student from the json payload
-     *
-     * @param jsonPayload
-     * @return
-     */
     public boolean createStudent(String jsonPayload) {
         if (jsonPayload == null) {
           return false;
@@ -46,9 +42,9 @@ public class StudentService {
 
         Gson gson = new Gson();
         try {
-            Student student = (Student) gson.fromJson(jsonPayload, Student.class);
-            if (student != null) {
-                return this.addStudent(student);
+            Student oneStudent = (Student) gson.fromJson(jsonPayload, Student.class);
+            if (oneStudent != null) {
+                return this.addStudent(oneStudent);
             }
         }
         catch (Exception e) {}
@@ -56,18 +52,42 @@ public class StudentService {
     }
 
 
+    /*public String oneStudentToJson(String jsonPayload) {
+        if (jsonPayload == null) {
+          return null;
+		}
+
+        Student oneStudent;
+        Gson gson = new Gson();
+        try {
+            oneStudent = (Student) gson.fromJson(jsonPayload, Student.class);
+            if (oneStudent != null) {
+                JsonDeserializer<Student.class> jsonFieldsHandlerClass = new StudentJsonDeserializer();
+                oneStudent = jsonFieldsHandlerClass.getFields();
+
+                return this.createOneStudent(oneStudent);
+            }
+        }
+        catch (Exception e) {}
+        return null;
+
+        // convert one student object to json and return as string
+        return this.toJson(oneStudent);
+    }*/
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////// inner methods ///////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private String toJson(Object list) {
-        if (list == null) {
+    private String toJson(Object objectTemp) {
+        if (objectTemp == null) {
           return null;
 		}
         Gson gson = new Gson();
         String json = null;
         try {
-            json = gson.toJson(list);
+            json = gson.toJson(objectTemp);
         }
         catch (Exception e) {}
         return json;
@@ -75,11 +95,24 @@ public class StudentService {
 
     private boolean addStudent(Student student) {
         Integer id = key.incrementAndGet();
-        student.setId(id);
-        this.students.put(id, student);
+        student.setId(id); 
+        this.students.put(student);
         return true;
     }
+
+    private Student createOneStudent(Student student) {
+        return student;
+    }
+
 }
+
+
+
+
+
+
+
+
 
 
 
