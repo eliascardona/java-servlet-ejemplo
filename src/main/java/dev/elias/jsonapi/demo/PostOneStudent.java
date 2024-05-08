@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "PostOneStudent", urlPatterns = "/postOneStudent")
 
-// Esta es nuestra rama de git de pruebas
+// Corrección. Esta es la rama principal
 
 public class PostOneStudent extends HttpServlet {
 
