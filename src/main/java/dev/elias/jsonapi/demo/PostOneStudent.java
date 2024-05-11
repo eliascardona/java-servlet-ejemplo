@@ -4,22 +4,26 @@ import java.util.stream.Collectors;
 import java.io.OutputStream;
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+import dev.elias.jsonapi.demo.entity.Student;
+import dev.elias.jsonapi.demo.entity.ResponseInterface;
 
 
 @WebServlet(name = "PostOneStudent", urlPatterns = "/postOneStudent")
 
-// Corrección. Esta es la rama principal
+
 
 public class PostOneStudent extends HttpServlet {
 
-    public StudentService studentService;
+    private StudentService studentService;
+    private ResponseService responseService;
 
     public PostOneStudent() {
         this.studentService = new StudentService();
@@ -31,24 +35,33 @@ public class PostOneStudent extends HttpServlet {
         String reqBody = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 
         int responseCode = HttpServletResponse.SC_OK;
-
-        // perform the action of add data to database, then format a response to the client
         boolean res = this.studentService.createStudent(reqBody);
-        String responsePayload;
-        //responsePayload = this.studentService.oneStudentToJson(reqBody);
+
+        String reqField = this.fromJsonToClass(reqBody);
+
+
+        this.responseService = new ResponseService(reqField);
+        String fmtJson = this.responseService.formatResponse();
 
         if(!res) {
             responseCode = HttpServletResponse.SC_BAD_REQUEST;
-            responsePayload = "bad request";
         }
-        responsePayload = reqBody;
-        this.outputResponse(resp, responsePayload, responseCode);
-
+        this.outputResponse(resp, fmtJson, responseCode);
     }
 
     /////////////////////////////////////////////////////////////////////
     /////////////////////// private methods ////////////////////////////
     ////////////////////////////////////////////////////////////////////
+
+    private String fromJsonToClass(String jsonPayload) {
+        String gradeIdVal;
+        Gson gson = new Gson();
+
+        Student studentPaylaod = (Student) gson.fromJson(jsonPayload, Student.class);
+        gradeIdVal = studentPaylaod.getGradeId();
+
+        return gradeIdVal;
+    }
 
     private void outputResponse(HttpServletResponse response, String payload, int status) {
         response.setHeader("Content-Type", "application/json");
