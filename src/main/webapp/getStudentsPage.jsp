@@ -28,8 +28,6 @@
 
 			<button type="button" id="submitBtn">solicitar datos</button>
 			<br>
-			<button type="button" id="showBtn">mostrar respuesta del servidor</button>
-			<br>
 
 			<span id="ctn" style="width:70%; display:grid; padding:2rem; margin-top:1rem; margin-bottom:1rem;">
 				<span>...</span>
@@ -39,25 +37,22 @@
 
 		<script defer>
 			const submitBtn = document.getElementById("submitBtn")
-			const showBtn = document.getElementById("showBtn")
 			const ctn = document.getElementById("ctn")
 
 			let fetchOptions = {
 				method: "GET",
 				headers: {
-					"Accept": "application/json",
 					"Content-Type": "application/json"
 				},
 			}
-			let studentsArr = []
+			//let studentsArr = []
 
 			async function handleSubmit() {
 				try {
-					const r = await fetch("/EliasJSONOne/getStudents", fetchOptions)
+					const r = await fetch("/EliasJSONOne/getDatabase", fetchOptions)
 					const j = await r.json()
-					console.log(j)
+					return j
 
-					studentsArr = [...j]
 
 				} catch(fetchError) {
 					console.error("Error fetching the API: ", fetchError)
@@ -66,26 +61,26 @@
 
 			submitBtn.addEventListener("click", async (e) => {
 				e.preventDefault()
-				await handleSubmit()
+				const respArr = await handleSubmit()
+				showCtn(respArr)
 			})
 
-			function showCtn() {
-				if(studentsArr.length > 0) {
-					studentsArr.forEach((el, i) => {
-						let span = document.createElement("span")
-						span.classList.add("studentSpan")
-						span.innerHTML = `Name: ${el.name}, Grade: ${el.grade}, GradeId: ${el.gradeId}`
-						ctn.appendChild(span)
-					})
-				} else {
-					alert("ha ocurrido un error al parsear la respuesta del servidor")
-				}
+			function showCtn(studentsArr) {
+				console.log(studentsArr)
+
+				studentsArr.forEach((el, i) => {
+					let spanEl = document.createElement("span")
+					spanEl.style.display="block"
+					spanEl.style.color="blue"
+
+					spanEl.innerText = `gradeId: ${el[i].gradeId}`
+					ctn.appendChild(spanEl)
+				})
+
+
 			}
 
-			showBtn.addEventListener("click", async (e) => {
-				e.preventDefault()
-				showCtn()
-			})
+
 
 		</script>
 	</main>
