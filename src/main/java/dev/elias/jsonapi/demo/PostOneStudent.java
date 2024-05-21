@@ -14,9 +14,7 @@ import com.google.gson.Gson;
 import dev.elias.jsonapi.demo.entity.Student;
 import dev.elias.jsonapi.demo.entity.ResponseInterface;
 
-
 @WebServlet(name = "PostOneStudent", urlPatterns = "/postOneStudent")
-
 
 
 public class PostOneStudent extends HttpServlet {

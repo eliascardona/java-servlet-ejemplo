@@ -51,8 +51,8 @@
 				try {
 					const r = await fetch("/EliasJSONOne/getDatabase", fetchOptions)
 					const j = await r.json()
-					return j
-
+					let aux = [...j]
+					return aux
 
 				} catch(fetchError) {
 					console.error("Error fetching the API: ", fetchError)
@@ -66,18 +66,13 @@
 			})
 
 			function showCtn(studentsArr) {
-				console.log(studentsArr)
-
 				studentsArr.forEach((el, i) => {
-					let spanEl = document.createElement("span")
+					let spanEl = document.createElement("strong")
 					spanEl.style.display="block"
-					spanEl.style.color="blue"
 
-					spanEl.innerText = `gradeId: ${el[i].gradeId}`
+					spanEl.innerText = "Student name: " + el.name + "."
 					ctn.appendChild(spanEl)
 				})
-
-
 			}
 
 

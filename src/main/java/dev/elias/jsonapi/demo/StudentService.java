@@ -20,10 +20,6 @@ public class StudentService {
 
         this.addStudent(new Student("Elias", 10, "A"));
         this.addStudent(new Student("Jesus", 10, "B"));
-        this.addStudent(new Student("Fabian", 10, "C"));
-        this.addStudent(new Student("Caleb", 10, "D"));
-        this.addStudent(new Student("Neto", 10, "E"));
-        this.addStudent(new Student("Andre", 10, "F"));
     }
 
     public String findAllStudents() {

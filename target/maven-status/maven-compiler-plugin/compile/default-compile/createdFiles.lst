@@ -1,0 +1,7 @@
+dev\elias\jsonapi\demo\GetStudents.class
+dev\elias\jsonapi\demo\entity\ResponseInterface.class
+dev\elias\jsonapi\demo\PostOneStudent.class
+dev\elias\jsonapi\demo\ResponseService.class
+dev\elias\jsonapi\demo\entity\Student.class
+dev\elias\jsonapi\demo\GetDatabase.class
+dev\elias\jsonapi\demo\StudentService.class
